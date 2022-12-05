@@ -1,0 +1,31 @@
+DISCOUNT_VALUE5 = 23.28
+REQUIRED_QUANTITY5 = 5
+DISCOUNT_VALUE6 = 50
+REQUIRED_QUANTITY6 = 6
+DISCOUNT_VALUE7 = 100
+REQUIRED_QUANTITY7 = 7
+qty=0
+Input.cart.line_items.each do |line_item|
+  if line_item.properties.has_key?('Discount') and line_item.properties['Discount'] == 'Christmas'
+  qty += line_item.quantity
+end
+end
+percent_discount = Decimal.new(DISCOUNT_VALUE5) / 100.0;
+percent_discount6 = Decimal.new(DISCOUNT_VALUE6) / 100.0;
+percent_discount7 = Decimal.new(DISCOUNT_VALUE7) / 100.0;
+Input.cart.line_items.each do |line_item|
+if qty == REQUIRED_QUANTITY5 and line_item.properties.has_key?('Discount') and line_item.properties['Discount'] == 'Christmas'
+  line_discount = line_item.line_price * percent_discount
+  line_item.change_line_price(line_item.line_price - line_discount, message: qty)
+ else if qty == REQUIRED_QUANTITY6 and line_item.properties.has_key?('Discount') and line_item.properties['Discount'] == 'Christmas'
+  line_discount6 = line_item.line_price * percent_discount6
+  line_item.change_line_price(line_item.line_price - line_discount6, message: qty)
+ else if qty == REQUIRED_QUANTITY7 and line_item.properties.has_key?('Discount') and line_item.properties['Discount'] == 'Christmas'
+  line_discount7 = line_item.line_price * percent_discount7
+  line_item.change_line_price(line_item.line_price - line_discount7, message: qty)
+ end
+ end
+ end
+end
+
+Output.cart = Input.cart 
